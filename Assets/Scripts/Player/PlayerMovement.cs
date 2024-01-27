@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,9 +11,12 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
 
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask footLayer;
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f;
+
+    [SerializeField] private float footDistance;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,5 +41,11 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, groundLayer);
+    }
+
+    public bool IsNearFoot()
+    {
+        print("aaaa");
+        return Physics2D.Raycast(transform.position, Vector2.right, footDistance, footLayer) || Physics2D.Raycast(transform.position, Vector2.left, footDistance, footLayer);
     }
 }
