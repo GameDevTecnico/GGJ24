@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharCreator : MonoBehaviour
 {
@@ -19,15 +20,17 @@ public class CharCreator : MonoBehaviour
     {
         if (head >= 0)  
         {
-            headGameObject.GetComponent<SpriteRenderer>().sprite = HeadParts[head];
+            headGameObject.GetComponent<Image>().sprite = HeadParts[head];
         }
         if (leg >= 0)
         {
-            legGameObject.GetComponent<SpriteRenderer>().sprite = LegParts[head];
+            legGameObject.GetComponent<Image>().sprite = LegParts[leg];
         }
         if (torso >= 0)
         {
-            torsoGameObject.GetComponent<SpriteRenderer>().sprite = TorsoParts[head];
+            print("torso");
+            print(torso);
+            torsoGameObject.GetComponent<Image>().sprite = TorsoParts[torso];
         }
     }
 
