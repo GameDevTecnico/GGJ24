@@ -15,6 +15,17 @@ public class CharCreator : MonoBehaviour
     [SerializeField] private List<Sprite> TorsoParts = new List<Sprite>();
     [SerializeField] private GameObject torsoGameObject;
 
+    void Start()
+    {
+        GameManager gameManager = FindObjectOfType<GameManager>();
+
+        if (gameManager != null)
+        {
+            head = gameManager.head;
+            leg = gameManager.leg;
+            torso = gameManager.torso;
+        }
+    }
 
     void Update()
     {
