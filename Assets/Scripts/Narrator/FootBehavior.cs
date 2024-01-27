@@ -13,7 +13,9 @@ public class FootBehavior : MonoBehaviour
     [SerializeField] private float cooldownTime = 3f;
 
     [SerializeField] private float moveSpeed = 1f;
-    [SerializeField] private float footSpeed = 1f;
+    [SerializeField] private float footSpeed = 3f;
+
+    [SerializeField] private PlayerMovement playerMovement;
     
 
     enum State
@@ -122,4 +124,8 @@ public class FootBehavior : MonoBehaviour
         }
     }
 
+    public bool isTickable()
+    {
+        return state == State.Cooldown && playerMovement.IsNearFoot();
+    }
 }
