@@ -38,11 +38,15 @@ public class FootBehavior : MonoBehaviour
     private int timesTickled = 0;
 
     private Rigidbody2D rb;
+    private Level3AudioManager audioManager;
+    private bool alreadySpoken = false;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioManager = GetComponent<Level3AudioManager>();
+        audioManager.play(0);
     }
 
     void FixedUpdate()
@@ -71,7 +75,7 @@ public class FootBehavior : MonoBehaviour
 
         if(timesTickled >= 3)
         {
-            //TODO: End game
+            Invoke("EndGame", 5f);
         }
 
     }
@@ -85,6 +89,8 @@ public class FootBehavior : MonoBehaviour
 
         tickledThisTurn = false;
 
+        alreadySpoken = false;
+
         tramplePosition = Random.Range(leftBound.position.x, rightBound.position.x);
         rb.position = new Vector2(tramplePosition, rb.position.y);
 
@@ -95,6 +101,13 @@ public class FootBehavior : MonoBehaviour
     void Trample()
     {
         rb.velocity = new Vector2(rb.velocity.x, - footSpeed * moveSpeed);
+
+        if(currentTrampleSequence == 2 && !alreadySpoken)
+        {
+            int randomLine = Random.Range(1, 4);
+            audioManager.play(randomLine);
+            alreadySpoken = true;
+        }
 
         if (Mathf.Abs(transform.position.y - leftBound.position.y) < 0.1f)
         {
@@ -140,10 +153,18 @@ public class FootBehavior : MonoBehaviour
     {
         if(state == State.Cooldown && (Mathf.Abs(transform.position.x - player.position.x) < distanceForTickle) && !tickledThisTurn)
         {
+            audioManager.play(timesTickled + 4);
             tickledThisTurn = true;
             timesTickled++;
             return true;
         }
         return false;
     }
+
+    private void EndGame()
+    {
+        Application.OpenURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        Application.Quit();
+    }
+
 }
