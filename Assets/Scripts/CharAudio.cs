@@ -44,7 +44,8 @@ public class AudioManager : MonoBehaviour
         if (first){
             firstTime();
         }
-        if (i >= 0)
+        
+        if (i >= 0 && !isPlayingAudio)
         {
             StartCoroutine(PlayAudio(i));
         }
