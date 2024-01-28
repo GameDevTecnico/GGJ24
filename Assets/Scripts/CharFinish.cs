@@ -7,6 +7,8 @@ public class CharFinish : MonoBehaviour
 {
     [SerializeField] private CharCreator charCreator;
 
+    public AudioClip audioClip;
+
     public void LoadNextScene()
     {
         if (charCreator != null)
@@ -19,6 +21,20 @@ public class CharFinish : MonoBehaviour
                 gameManager.torso = charCreator.torso;
             }
         }
+        StartCoroutine(PlayAudio());
+    }
+
+    private IEnumerator PlayAudio()
+    {
+        while (GetComponent<AudioSource>().isPlaying)
+        {
+            yield return null;
+        }
+
+        GetComponent<AudioSource>().clip = audioClip;
+        GetComponent<AudioSource>().Play();
+
+        yield return new WaitForSeconds(audioClip.length + 1);
         SceneManager.LoadScene("Lvl 2");
     }
 }
