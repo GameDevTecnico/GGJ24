@@ -15,7 +15,9 @@ public class FootBehavior : MonoBehaviour
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float footSpeed = 3f;
 
-    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private Transform player;
+
+    [SerializeField] private float distanceForTickle;
     
 
     enum State
@@ -31,6 +33,9 @@ public class FootBehavior : MonoBehaviour
     private float tramplePosition;
     private int currentTrampleSequence = 0;
     private float currentCooldownTime = 0f;
+
+    private bool tickledThisTurn = false;
+    private int timesTickled = 0;
 
     private Rigidbody2D rb;
 
@@ -64,6 +69,11 @@ public class FootBehavior : MonoBehaviour
                 break;
         }
 
+        if(timesTickled >= 3)
+        {
+            //TODO: End game
+        }
+
     }
 
     void InitiateTrample()
@@ -72,6 +82,8 @@ public class FootBehavior : MonoBehaviour
         currentCooldownTime = 0f;
 
         currentTrampleSequence++;
+
+        tickledThisTurn = false;
 
         tramplePosition = Random.Range(leftBound.position.x, rightBound.position.x);
         rb.position = new Vector2(tramplePosition, rb.position.y);
@@ -126,6 +138,12 @@ public class FootBehavior : MonoBehaviour
 
     public bool isTickable()
     {
-        return state == State.Cooldown && playerMovement.IsNearFoot();
+        if(state == State.Cooldown && (Mathf.Abs(transform.position.x - player.position.x) < distanceForTickle) && !tickledThisTurn)
+        {
+            tickledThisTurn = true;
+            timesTickled++;
+            return true;
+        }
+        return false;
     }
 }
