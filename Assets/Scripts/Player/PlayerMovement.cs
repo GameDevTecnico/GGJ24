@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f;
 
-    [SerializeField] private float footDistance;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,9 +42,4 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .1f, groundLayer);
     }
 
-    public bool IsNearFoot()
-    {
-        print("aaaa");
-        return Physics2D.Raycast(transform.position, Vector2.right, footDistance, footLayer) || Physics2D.Raycast(transform.position, Vector2.left, footDistance, footLayer);
-    }
 }

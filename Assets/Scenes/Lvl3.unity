@@ -685,7 +685,6 @@ MonoBehaviour:
     m_Bits: 128
   moveSpeed: 5
   jumpForce: 5
-  footDistance: 5
 --- !u!114 &1643860625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2072,7 +2071,8 @@ MonoBehaviour:
   cooldownTime: 3
   moveSpeed: 1
   footSpeed: 3
-  playerMovement: {fileID: 1643860624}
+  player: {fileID: 1643860622}
+  distanceForTickle: 5
 --- !u!61 &1918343435
 BoxCollider2D:
   m_ObjectHideFlags: 0
