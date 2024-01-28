@@ -6,12 +6,13 @@ public class AudioManager : MonoBehaviour
     private bool isPlayingAudio = false;
     private bool first = true;
     public AudioClip[] audioClips;
+    public int linesAtStart = 2;
 
     private void firstTime()
     {
         if (first && !isPlayingAudio)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < linesAtStart; i++)
             {
                 StartCoroutine(PlayAudio(i));
             }

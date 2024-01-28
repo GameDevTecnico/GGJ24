@@ -9,8 +9,13 @@ public class Riddle : MonoBehaviour
     private string currentString = "";
     private List<string> wordList = new List<string> { "JUNK", "LUNA", "NAIL", "JAIL", "HALL", "HAIL", "NILL", "LIAR", "HAIR", "RUIN", "ALAN" };
     public TextMeshProUGUI ui;
-    public AudioClip[] wordAudioClips;  
-    public AudioSource audioSource;
+    public AudioClip[] audioClips;  
+
+    void Start()
+    {
+        Debug.Log("Start method called");
+        PlayAudio(0, false);
+    }
 
     public void WriteChar(string letter)
     {
@@ -18,6 +23,7 @@ public class Riddle : MonoBehaviour
         if (currentString.Length > 4)
         {
             Delete();
+            currentString += letter;
         }
         Debug.Log("Current String: " + currentString);
 
@@ -36,26 +42,25 @@ public class Riddle : MonoBehaviour
         if (wordList.Contains(currentString))
         {
             int index = wordList.IndexOf(currentString);
-            PlayAudio(index);
-
-            if (currentString.Equals("alan", System.StringComparison.OrdinalIgnoreCase))
-            {
-                LoadScene("Lvl3");
-            }
+            PlayAudio(index + 1, index == 5); // change number
         }
     }
 
-    private void PlayAudio(int index)
+    private IEnumerator PlayAudio(int i, bool correct)
     {
-        if (index >= 0 && index < wordAudioClips.Length)
+        while (GetComponent<AudioSource>().isPlaying)
         {
-            audioSource.clip = wordAudioClips[index];
-            audioSource.Play();
+            yield return null;
         }
-    }
 
-    private void LoadScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
+        GetComponent<AudioSource>().clip = audioClips[i];
+        GetComponent<AudioSource>().Play();
+
+        yield return new WaitForSeconds(audioClips[i].length + 1);
+
+        if (correct)
+        {
+            SceneManager.LoadScene("Lvl 3");
+        }
     }
 }
