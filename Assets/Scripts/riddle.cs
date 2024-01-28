@@ -13,8 +13,7 @@ public class Riddle : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start method called");
-        PlayAudio(0, false);
+        StartCoroutine(PlayAudio(0, false));
     }
 
     public void WriteChar(string letter)
@@ -42,7 +41,7 @@ public class Riddle : MonoBehaviour
         if (wordList.Contains(currentString))
         {
             int index = wordList.IndexOf(currentString);
-            PlayAudio(index + 1, index == 5); // change number
+            StartCoroutine(PlayAudio(index + 1, index == 10)); // change number
         }
     }
 
