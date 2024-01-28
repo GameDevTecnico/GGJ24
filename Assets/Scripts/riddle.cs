@@ -59,7 +59,7 @@ public class Riddle : MonoBehaviour
 
         if (correct)
         {
-            SceneManager.LoadScene("Lvl 3");
+            SceneManager.LoadScene("Lvl3");
         }
     }
 }
